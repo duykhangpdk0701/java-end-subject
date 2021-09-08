@@ -1,0 +1,114 @@
+JFDML JFormDesigner: "7.0.4.0.360" Java: "11.0.11" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) {
+			"autoSize": false
+		} ) {
+			name: "this"
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "fullnameLabel"
+				"text": "Họ và tên"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 65
+				"y": 220
+				"width": 100
+				"height": 25
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "usernameLabel"
+				"text": "Username"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 100
+				"height": 25
+				"x": 65
+				"y": 280
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "passwordLabel"
+				"text": "Password"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 100
+				"height": 25
+				"x": 65
+				"y": 340
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "phoneNumberLabel"
+				"text": "Phone Number"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 100
+				"height": 25
+				"x": 65
+				"y": 405
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "passwordInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 195
+				"y": 340
+				"height": 25
+				"width": 200
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "phoneInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 200
+				"height": 25
+				"x": 195
+				"y": 405
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "usernameInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 200
+				"height": 25
+				"x": 195
+				"y": 280
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "fullnameInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 200
+				"height": 25
+				"x": 195
+				"y": 220
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Register"
+				"horizontalAlignment": 0
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 10, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 65
+				"y": 75
+				"width": 335
+				"height": 45
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "backToLoginBtn"
+				"text": "back to login"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "backToLoginBtnActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 60
+				"y": 485
+				"width": 145
+				"height": 40
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "registerBtn"
+				"text": "Register"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "registerBtnActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"width": 145
+				"height": 40
+				"x": 250
+				"y": 485
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 0 )
+			"size": new java.awt.Dimension( 470, 705 )
+		} )
+	}
+}
