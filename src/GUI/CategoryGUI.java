@@ -52,6 +52,14 @@ public class CategoryGUI extends JPanel {
         loadCategory();
     }
 
+    private void editBtnActionPerformed(ActionEvent e) {
+        DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
+        int value = Integer.parseInt(dtm.getValueAt(table1.getSelectedRow(), 0).toString());
+        EditCategoryGUI editCategoryGUI = new EditCategoryGUI(value);
+        editCategoryGUI.setVisible(true);
+        loadCategory();
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -62,16 +70,16 @@ public class CategoryGUI extends JPanel {
         editBtn = new JButton();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border
-                .EmptyBorder(0, 0, 0, 0), "JF\u006frmD\u0065sig\u006eer \u0045val\u0075ati\u006fn", javax.swing.border.TitledBorder.CENTER, javax
-                .swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dia\u006cog", java.awt.Font.BOLD,
-                12), java.awt.Color.red), getBorder()));
-        addPropertyChangeListener(new java.beans
-                .PropertyChangeListener() {
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
+                (0, 0, 0, 0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax.swing.border.TitledBorder.CENTER, javax.swing.border
+                .TitledBorder.BOTTOM, new java.awt.Font("D\u0069alog", java.awt.Font.BOLD, 12), java.awt
+                .Color.red), getBorder()));
+        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ("\u0062ord\u0065r".equals(e.
-                        getPropertyName())) throw new RuntimeException();
+            public void
+            propertyChange(java.beans.PropertyChangeEvent e) {
+                if ("\u0062order".equals(e.getPropertyName())) throw new RuntimeException()
+                        ;
             }
         });
         setLayout(null);
@@ -108,6 +116,7 @@ public class CategoryGUI extends JPanel {
 
         //---- editBtn ----
         editBtn.setText("S\u1eeda");
+        editBtn.addActionListener(e -> editBtnActionPerformed(e));
         add(editBtn);
         editBtn.setBounds(865, 515, 100, 40);
 

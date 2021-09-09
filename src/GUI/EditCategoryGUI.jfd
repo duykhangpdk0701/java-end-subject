@@ -1,0 +1,71 @@
+JFDML JFormDesigner: "7.0.4.0.360" Java: "11.0.11" encoding: "UTF-8"
+
+new FormModel {
+	contentType: "form/swing"
+	root: new FormRoot {
+		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
+			name: "this"
+			"$sizePolicy": 1
+			"defaultCloseOperation": 2
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label1"
+				"text": "Sửa mục"
+				"horizontalAlignment": 0
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 0, 10, false )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 105
+				"y": 65
+				"width": 375
+				"height": 40
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "nameLabel"
+				"text": "Name:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 95
+				"y": 145
+				"width": 80
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "descriptionLabel"
+				"text": "Description:"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 95
+				"y": 225
+				"width": 80
+				"height": 30
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "nameInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 185
+				"y": 145
+				"height": 30
+				"width": 295
+			} )
+			add( new FormComponent( "javax.swing.JTextField" ) {
+				name: "descriptionInput"
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 185
+				"y": 225
+				"height": 30
+				"width": 295
+			} )
+			add( new FormComponent( "javax.swing.JButton" ) {
+				name: "confirmBtn"
+				"text": "Xác nhận"
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "confimBtnActionPerformed", true ) )
+				addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "confirmBtnActionPerformed", true ) )
+			}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+				"x": 445
+				"y": 305
+				"height": 40
+				"width": 100
+			} )
+		}, new FormLayoutConstraints( null ) {
+			"location": new java.awt.Point( 0, 15 )
+			"size": new java.awt.Dimension( 595, 415 )
+		} )
+	}
+}
