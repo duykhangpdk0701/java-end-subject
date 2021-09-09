@@ -7,11 +7,24 @@ package GUI;
 import java.awt.event.*;
 
 import BLL.CategoryBLL;
+import BLL.Helper;
 import DTO.CategoryDTO;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Vector;
+import javax.print.attribute.standard.JobSheets;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.*;
 
 /**
@@ -49,7 +62,12 @@ public class CategoryGUI extends JPanel {
     private void addBtnActionPerformed(ActionEvent e) {
         AddCategoryGUI addCategoryGUI = new AddCategoryGUI();
         addCategoryGUI.setVisible(true);
-        loadCategory();
+        addCategoryGUI.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                loadCategory();
+            }
+        });
     }
 
     private void editBtnActionPerformed(ActionEvent e) {
@@ -57,7 +75,24 @@ public class CategoryGUI extends JPanel {
         int value = Integer.parseInt(dtm.getValueAt(table1.getSelectedRow(), 0).toString());
         EditCategoryGUI editCategoryGUI = new EditCategoryGUI(value);
         editCategoryGUI.setVisible(true);
-        loadCategory();
+        editCategoryGUI.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                loadCategory();
+            }
+        });
+    }
+
+    private void orderBtnActionPerformed(ActionEvent e) {
+        // TODO add your code here
+    }
+
+    private void exportExelActionPerformed(ActionEvent e) {
+        Helper.exportFileExcel(table1, this);
+    }
+
+    private void printBtnActionPerformed(ActionEvent e) {
+        Helper.print(table1, "Category");
     }
 
 
@@ -68,17 +103,19 @@ public class CategoryGUI extends JPanel {
         table1 = new JTable();
         addBtn = new JButton();
         editBtn = new JButton();
+        exportExel = new JButton();
+        printBtn = new JButton();
 
         //======== this ========
         setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
-                (0, 0, 0, 0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax.swing.border.TitledBorder.CENTER, javax.swing.border
-                .TitledBorder.BOTTOM, new java.awt.Font("D\u0069alog", java.awt.Font.BOLD, 12), java.awt
+                (0, 0, 0, 0), "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax.swing.border.TitledBorder.CENTER, javax.swing.border
+                .TitledBorder.BOTTOM, new java.awt.Font("D\u0069al\u006fg", java.awt.Font.BOLD, 12), java.awt
                 .Color.red), getBorder()));
         addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             @Override
             public void
             propertyChange(java.beans.PropertyChangeEvent e) {
-                if ("\u0062order".equals(e.getPropertyName())) throw new RuntimeException()
+                if ("\u0062or\u0064er".equals(e.getPropertyName())) throw new RuntimeException()
                         ;
             }
         });
@@ -120,6 +157,21 @@ public class CategoryGUI extends JPanel {
         add(editBtn);
         editBtn.setBounds(865, 515, 100, 40);
 
+        //---- exportExel ----
+        exportExel.setText("Xu\u1ea5t file");
+        exportExel.addActionListener(e -> {
+            orderBtnActionPerformed(e);
+            exportExelActionPerformed(e);
+        });
+        add(exportExel);
+        exportExel.setBounds(715, 515, 100, 40);
+
+        //---- printBtn ----
+        printBtn.setText("In");
+        printBtn.addActionListener(e -> printBtnActionPerformed(e));
+        add(printBtn);
+        printBtn.setBounds(555, 520, 100, 35);
+
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
@@ -143,5 +195,7 @@ public class CategoryGUI extends JPanel {
     private JTable table1;
     private JButton addBtn;
     private JButton editBtn;
+    private JButton exportExel;
+    private JButton printBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

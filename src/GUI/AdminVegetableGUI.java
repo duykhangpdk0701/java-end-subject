@@ -4,6 +4,7 @@
 
 package GUI;
 
+import BLL.Helper;
 import BLL.VegetableBLL;
 import DTO.VegetableDTO;
 
@@ -50,7 +51,33 @@ public class AdminVegetableGUI extends JPanel {
     private void addBtnActionPerformed(ActionEvent e) {
         AddVegetableGUI addVegetableGUI = new AddVegetableGUI();
         addVegetableGUI.setVisible(true);
-        loadVegetable();
+        addVegetableGUI.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                loadVegetable();
+            }
+        });
+    }
+
+    private void editBtnActionPerformed(ActionEvent e) {
+        DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
+        int value = Integer.parseInt(dtm.getValueAt(table1.getSelectedRow(), 0).toString());
+        EditVegetableGUI editVegetableGUI = new EditVegetableGUI(value);
+        editVegetableGUI.setVisible(true);
+        editVegetableGUI.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                loadVegetable();
+            }
+        });
+    }
+
+    private void printBtnActionPerformed(ActionEvent e) {
+        Helper.print(table1, "Vegetable");
+    }
+
+    private void exportBtnActionPerformed(ActionEvent e) {
+        Helper.exportFileExcel(table1, this);
     }
 
     private void initComponents() {
@@ -60,19 +87,23 @@ public class AdminVegetableGUI extends JPanel {
         table1 = new JTable();
         editBtn = new JButton();
         addBtn = new JButton();
+        exportBtn = new JButton();
+        printBtn = new JButton();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
-                EmptyBorder(0, 0, 0, 0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax.swing.border.TitledBorder.CENTER, javax.swing
-                .border.TitledBorder.BOTTOM, new java.awt.Font("D\u0069alog", java.awt.Font.BOLD, 12),
-                java.awt.Color.red), getBorder()));
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
+                .border.EmptyBorder(0, 0, 0, 0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax.swing.border.TitledBorder
+                .CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dia\u006cog", java.
+                awt.Font.BOLD, 12), java.awt.Color.red), getBorder()))
+        ;
         addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e) {
-                if ("\u0062order".equals(e.getPropertyName()))
-                    throw new RuntimeException();
+            public void propertyChange(java.beans.PropertyChangeEvent e
+            ) {
+                if ("bord\u0065r".equals(e.getPropertyName())) throw new RuntimeException();
             }
-        });
+        })
+        ;
         setLayout(null);
 
         //======== scrollPane1 ========
@@ -95,6 +126,7 @@ public class AdminVegetableGUI extends JPanel {
 
         //---- editBtn ----
         editBtn.setText("S\u1eeda");
+        editBtn.addActionListener(e -> editBtnActionPerformed(e));
         add(editBtn);
         editBtn.setBounds(830, 520, 100, 40);
 
@@ -103,6 +135,18 @@ public class AdminVegetableGUI extends JPanel {
         addBtn.addActionListener(e -> addBtnActionPerformed(e));
         add(addBtn);
         addBtn.setBounds(1015, 520, 100, 40);
+
+        //---- exportBtn ----
+        exportBtn.setText("Xu\u1ea5t file Excel");
+        exportBtn.addActionListener(e -> exportBtnActionPerformed(e));
+        add(exportBtn);
+        exportBtn.setBounds(645, 520, 115, 40);
+
+        //---- printBtn ----
+        printBtn.setText("In");
+        printBtn.addActionListener(e -> printBtnActionPerformed(e));
+        add(printBtn);
+        printBtn.setBounds(460, 520, 100, 40);
 
         {
             // compute preferred size
@@ -127,5 +171,7 @@ public class AdminVegetableGUI extends JPanel {
     private JTable table1;
     private JButton editBtn;
     private JButton addBtn;
+    private JButton exportBtn;
+    private JButton printBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

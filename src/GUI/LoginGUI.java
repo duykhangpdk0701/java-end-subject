@@ -38,6 +38,7 @@ public class LoginGUI extends JFrame {
             StoreUserID.setUsername(user.getUsername());
             StoreUserID.setPassword(user.getPassword());
             StoreUserID.setPhoneNumber(user.getPhoneNumber());
+            StoreUserID.setAdmin(user.getAdmin());
             System.out.println(StoreUserID.getFullname());
             JOptionPane.showMessageDialog(this, "đăng nhập thành công");
             MainFrameGUI mainFrameGUI = new MainFrameGUI();

@@ -9,6 +9,7 @@ import DTO.CategoryDTO;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Locale;
 import javax.swing.*;
 
 /**
@@ -16,24 +17,35 @@ import javax.swing.*;
  */
 public class EditCategoryGUI extends JFrame {
     CategoryBLL categoryBLL = new CategoryBLL();
+    String nameBeforeEdit;
+    String nameAfterEdit;
+    int idCategory;
 
     public EditCategoryGUI(int id) {
         initComponents();
         loadCategory(id);
+        idCategory = id;
     }
 
     public void loadCategory(int id) {
         CategoryDTO categoryDTO = categoryBLL.getCategoryById(id);
         nameInput.setText(categoryDTO.getName());
         descriptionInput.setText(categoryDTO.getDescription());
+        nameBeforeEdit = nameInput.getText().trim().toLowerCase();
     }
 
 
     private void confirmBtnActionPerformed(ActionEvent e) {
+        nameAfterEdit = nameInput.getText().trim().toLowerCase();
         if (nameInput.getText().trim().equals("") || descriptionInput.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
         } else {
+            CategoryDTO categoryDTO = new CategoryDTO();
+            categoryDTO.setId(idCategory);
+            categoryDTO.setName(nameInput.getText().trim().toLowerCase());
+            categoryDTO.setDescription(descriptionInput.getText().trim());
 
+            JOptionPane.showMessageDialog(this, categoryBLL.editCategory(nameBeforeEdit, nameAfterEdit, categoryDTO));
         }
     }
 

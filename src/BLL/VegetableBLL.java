@@ -22,6 +22,17 @@ public class VegetableBLL {
         return "thêm sản phẩm thất bại";
     }
 
+    public String editVegetable(String nameBeforeName, String nameAfterName, VegetableDTO vegetableDTO) {
+        if (vegetableDAL.hasVegetableName(nameBeforeName, nameAfterName)) {
+            return "Tên sản phẩm đã tồn tại";
+        }
+        if (vegetableDAL.editVegetable(vegetableDTO)) {
+            return "Sửa sản phẩm thành công";
+        }
+        return "Sửa sản phẩm thất bại";
+
+    }
+
     public VegetableDTO findVegetableByName(String name) {
         return vegetableDAL.findVegetableName(name);
     }

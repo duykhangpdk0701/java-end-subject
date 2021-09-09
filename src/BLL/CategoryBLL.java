@@ -34,4 +34,16 @@ public class CategoryBLL {
         return "Thêm thất bại";
     }
 
+
+    public String editCategory(String nameBeforeEdit, String nameAfterEdit, CategoryDTO categoryDTO) {
+
+        if (categoryDAL.hasCategoryName(nameBeforeEdit, nameAfterEdit)) {
+            return "Tên thư mục đã tồn tại";
+        }
+        if (categoryDAL.editCategory(categoryDTO)) {
+            return "Sửa thành công thành công";
+        }
+        return "thêm thất bại";
+    }
+
 }

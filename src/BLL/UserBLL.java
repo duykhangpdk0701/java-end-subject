@@ -12,6 +12,19 @@ public class UserBLL {
         return userDAL.getAllUsers();
     }
 
+    public String becomeUser(int id) {
+        if (userDAL.becomeUser(id)) {
+            return "Thành công";
+        }
+        return "Thất bại";
+    }
+
+    public String becomeAdmin(int id) {
+        if (userDAL.becomeAdmin(id)) {
+            return "Thành công";
+        }
+        return "thất bại";
+    }
 
     public boolean hasUser(String username, String password) {
         return userDAL.hasUser(username, password);

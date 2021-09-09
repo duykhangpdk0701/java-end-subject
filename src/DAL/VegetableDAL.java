@@ -59,6 +59,31 @@ public class VegetableDAL {
         return result;
     }
 
+    public boolean editVegetable(VegetableDTO vegetable) {
+        boolean result = false;
+        if (Conn.openConnection()) {
+            try {
+                String sql = "UPDATE `vegetable` SET `categoryId`= ?,`name`= ?,`unit`= ?,`amount`= ?,`price`= ? WHERE `id` = ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setInt(1, vegetable.getCategoryId());
+                prstmt.setString(2, vegetable.getName());
+                prstmt.setString(3, vegetable.getUnit());
+                prstmt.setInt(4, vegetable.getAmount());
+                prstmt.setFloat(5, vegetable.getPrice());
+                prstmt.setInt(6, vegetable.getId());
+                if (prstmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return result;
+    }
+
+
     public boolean hasVegetableId(int id) {
         boolean result = false;
         if (Conn.openConnection()) {
@@ -92,6 +117,26 @@ public class VegetableDAL {
                 Conn.closeConnection();
             }
 
+        }
+        return result;
+    }
+
+
+    public boolean hasVegetableName(String nameBeforeEdit, String nameAfterEdit) {
+        boolean result = false;
+        if (Conn.openConnection()) {
+            try {
+                String sql = "SELECT * FROM `vegetable` WHERE `name` = ? AND `name` != ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setString(1, nameAfterEdit);
+                prstmt.setString(2, nameBeforeEdit);
+                ResultSet rs = prstmt.executeQuery();
+                result = rs.next();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
         }
         return result;
     }

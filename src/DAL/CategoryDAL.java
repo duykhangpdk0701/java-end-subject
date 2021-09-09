@@ -58,6 +58,29 @@ public class CategoryDAL {
     }
 
 
+    public boolean editCategory(CategoryDTO categoryDTO) {
+        boolean result = false;
+        if (Conn.openConnection()) {
+            try {
+                String sql = "UPDATE `category` SET `name`= ?,`description`= ? WHERE `id` = ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setString(1, categoryDTO.getName());
+                prstmt.setString(2, categoryDTO.getDescription());
+                prstmt.setInt(3, categoryDTO.getId());
+                if (prstmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+                prstmt.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return result;
+    }
+
+
     public boolean hasCategoryName(String name) {
         boolean result = false;
         if (Conn.openConnection()) {
@@ -65,6 +88,27 @@ public class CategoryDAL {
                 String sql = "SELECT * FROM `category` WHERE name = ?";
                 PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
                 prstmt.setString(1, name);
+                ResultSet rs = prstmt.executeQuery();
+                result = rs.next();
+                prstmt.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return result;
+    }
+
+
+    public boolean hasCategoryName(String nameBeforeEdit, String nameAfterEdit) {
+        boolean result = false;
+        if (Conn.openConnection()) {
+            try {
+                String sql = "SELECT * FROM `category` WHERE `name` = ? AND `name` != ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setString(1, nameAfterEdit);
+                prstmt.setString(2, nameBeforeEdit);
                 ResultSet rs = prstmt.executeQuery();
                 result = rs.next();
                 prstmt.close();
@@ -124,7 +168,6 @@ public class CategoryDAL {
 
         }
         return null;
-
     }
 
 

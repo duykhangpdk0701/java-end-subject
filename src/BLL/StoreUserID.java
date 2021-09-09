@@ -6,9 +6,18 @@ public abstract class StoreUserID {
     private static String username;
     private static String password;
     private static String phoneNumber;
+    private static int admin;
 
     public static int getId() {
         return id;
+    }
+
+    public static int getAdmin() {
+        return admin;
+    }
+
+    public static void setAdmin(int admin) {
+        StoreUserID.admin = admin;
     }
 
     public static void setId(int id) {

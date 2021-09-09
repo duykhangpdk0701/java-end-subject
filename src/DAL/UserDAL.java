@@ -1,5 +1,6 @@
 package DAL;
 
+import DTO.CategoryDTO;
 import DTO.UserDTO;
 
 import java.sql.PreparedStatement;
@@ -130,6 +131,7 @@ public class UserDAL {
                     userDTO.setFullname(rs.getString("fullname"));
                     userDTO.setUsername(rs.getString("username"));
                     userDTO.setPhoneNumber(rs.getString("phoneNumber"));
+                    userDTO.setAdmin(rs.getInt("admin"));
                 }
                 return userDTO;
             } catch (SQLException ex) {
@@ -143,4 +145,43 @@ public class UserDAL {
     }
 
 
+    public boolean becomeAdmin(int id) {
+        boolean result = false;
+        if (Conn.openConnection()) {
+            try {
+                String sql = "UPDATE `user` SET `admin`= 1 WHERE `id` = ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setInt(1, id);
+                if (prstmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+                prstmt.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return result;
+    }
+
+    public boolean becomeUser(int id) {
+        boolean result = false;
+        if (Conn.openConnection()) {
+            try {
+                String sql = "UPDATE `user` SET `admin`= 0 WHERE `id` = ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setInt(1, id);
+                if (prstmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+                prstmt.close();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return result;
+    }
 }

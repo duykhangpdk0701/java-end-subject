@@ -28,5 +28,7 @@
         <jarDirectory url="file://$MODULE_DIR$/../../mysql-connector-java-8.0.26" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="poi-integration-5.0.0" level="project" />
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
