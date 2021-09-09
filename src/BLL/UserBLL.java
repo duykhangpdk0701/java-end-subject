@@ -43,4 +43,18 @@ public class UserBLL {
     public UserDTO findUserByUsername(String username) {
         return userDAL.findUserByUsername(username);
     }
+
+    public UserDTO findUserByUserId(int id) {
+        return userDAL.findUserByUserId(id);
+    }
+
+    public String editUser(String usernameBefore, String usernameAfter, UserDTO user) {
+        if (userDAL.hasUserUsername(usernameBefore, usernameAfter)) {
+            return "Username đã tồn tại";
+        }
+        if (userDAL.editUser(user)) {
+            return "Lưu thành công";
+        }
+        return "Lưu thất bại";
+    }
 }

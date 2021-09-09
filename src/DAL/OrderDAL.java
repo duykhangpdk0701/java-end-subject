@@ -107,4 +107,84 @@ public class OrderDAL {
         }
         return null;
     }
+
+
+    public Vector<OrderDTO> getOrderByMonthAndYear(int month, int year) {
+        Vector<OrderDTO> arr = new Vector<OrderDTO>();
+        if (Conn.openConnection()) {
+            try {
+                String sql = "SELECT * FROM `order` WHERE month (date) = ? AND year (date) = ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setInt(1, month);
+                prstmt.setInt(2, year);
+                ResultSet rs = prstmt.executeQuery();
+                while (rs.next()) {
+                    OrderDTO order = new OrderDTO();
+                    order.setId(rs.getInt("id"));
+                    order.setUserId(rs.getInt("userId"));
+                    order.setDate(rs.getString("date"));
+                    order.setTotal(rs.getFloat("total"));
+                    order.setNote(rs.getString("note"));
+                    arr.add(order);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return arr;
+    }
+
+    public Vector<OrderDTO> getOrderByMonth(int month) {
+        Vector<OrderDTO> arr = new Vector<OrderDTO>();
+        if (Conn.openConnection()) {
+            try {
+                String sql = "SELECT * FROM `order` WHERE month (date ) = ? ";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setInt(1, month);
+                ResultSet rs = prstmt.executeQuery();
+                while (rs.next()) {
+                    OrderDTO order = new OrderDTO();
+                    order.setId(rs.getInt("id"));
+                    order.setUserId(rs.getInt("userId"));
+                    order.setDate(rs.getString("date"));
+                    order.setTotal(rs.getFloat("total"));
+                    order.setNote(rs.getString("note"));
+                    arr.add(order);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return arr;
+    }
+
+    public Vector<OrderDTO> getOrderByYear(int year) {
+        Vector<OrderDTO> arr = new Vector<OrderDTO>();
+        if (Conn.openConnection()) {
+            try {
+                String sql = "SELECT * FROM `order` WHERE year (date) = ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setInt(1, year);
+                ResultSet rs = prstmt.executeQuery();
+                while (rs.next()) {
+                    OrderDTO order = new OrderDTO();
+                    order.setId(rs.getInt("id"));
+                    order.setUserId(rs.getInt("userId"));
+                    order.setDate(rs.getString("date"));
+                    order.setTotal(rs.getFloat("total"));
+                    order.setNote(rs.getString("note"));
+                    arr.add(order);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return arr;
+    }
 }

@@ -81,7 +81,7 @@ public class RegisterGUI extends JFrame {
         passwordLabel.setBounds(65, 340, 100, 25);
 
         //---- phoneNumberLabel ----
-        phoneNumberLabel.setText("Phone Number");
+        phoneNumberLabel.setText("S\u0111t");
         contentPane.add(phoneNumberLabel);
         phoneNumberLabel.setBounds(65, 405, 100, 25);
         contentPane.add(passwordInput);
@@ -94,20 +94,20 @@ public class RegisterGUI extends JFrame {
         fullnameInput.setBounds(195, 220, 200, 25);
 
         //---- label1 ----
-        label1.setText("Register");
+        label1.setText("\u0110\u0103ng k\u00fd");
         label1.setHorizontalAlignment(SwingConstants.CENTER);
         label1.setFont(label1.getFont().deriveFont(label1.getFont().getSize() + 10f));
         contentPane.add(label1);
         label1.setBounds(65, 75, 335, 45);
 
         //---- backToLoginBtn ----
-        backToLoginBtn.setText("back to login");
+        backToLoginBtn.setText("Tr\u1edf v\u1ec1 \u0111\u0103ng nh\u1eadp");
         backToLoginBtn.addActionListener(e -> backToLoginBtnActionPerformed(e));
         contentPane.add(backToLoginBtn);
         backToLoginBtn.setBounds(60, 485, 145, 40);
 
         //---- registerBtn ----
-        registerBtn.setText("Register");
+        registerBtn.setText("\u0110\u0103ng k\u00fd");
         registerBtn.addActionListener(e -> registerBtnActionPerformed(e));
         contentPane.add(registerBtn);
         registerBtn.setBounds(250, 485, 145, 40);

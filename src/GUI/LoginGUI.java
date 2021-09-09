@@ -87,13 +87,13 @@ public class LoginGUI extends JFrame {
         passwordLabel.setBounds(165, 205, 100, 25);
 
         //---- loginBtn ----
-        loginBtn.setText("Login");
+        loginBtn.setText("\u0110\u0103ng nh\u1eadp");
         loginBtn.addActionListener(e -> loginBtnActionPerformed(e));
         contentPane.add(loginBtn);
         loginBtn.setBounds(160, 285, 155, 30);
 
         //---- registerBtn ----
-        registerBtn.setText("Register");
+        registerBtn.setText("\u0110\u0103ng k\u00fd");
         registerBtn.addActionListener(e -> registerBtnActionPerformed(e));
         contentPane.add(registerBtn);
         registerBtn.setBounds(350, 285, 160, 30);

@@ -22,19 +22,24 @@ new FormModel {
 					"text": "user"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "vegetableMenuItem"
-						"text": "vegetable"
+						"text": "Cửa hàng"
 						addEvent( new FormEvent( "java.awt.event.MouseListener", "mouseClicked", "vegetableMenuItemMouseClicked", true ) )
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "vegetableMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "historyMenuItem"
-						"text": "history"
+						"text": "Lịch sử"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "historyMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "cartBtn"
-						"text": "cart"
+						"text": "Giô hàng"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "cartBtnActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "profileMenuItem"
+						"text": "Thông tin cá nhân"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "profileMenuItemActionPerformed", true ) )
 					} )
 				} )
 				add( new FormContainer( "javax.swing.JMenu", new FormLayoutManager( class javax.swing.JMenu ) ) {
@@ -42,18 +47,23 @@ new FormModel {
 					"text": "admin"
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "userMenuItem"
-						"text": "User"
+						"text": "Người dùng"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "userMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "categoryMenuItem"
-						"text": "Category"
+						"text": "Danh muc"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "categoryMenuItemActionPerformed", true ) )
 					} )
 					add( new FormComponent( "javax.swing.JMenuItem" ) {
 						name: "adminVegetableMenuItem"
-						"text": "Vegetable"
+						"text": "sản phẩm"
 						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "adminVegetableMenuItemActionPerformed", true ) )
+					} )
+					add( new FormComponent( "javax.swing.JMenuItem" ) {
+						name: "statisticMenuItem"
+						"text": "Thống kê"
+						addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "statisticMenuItemActionPerformed", true ) )
 					} )
 				} )
 			}

@@ -39,7 +39,11 @@ public class CategoryGUI extends JPanel {
     }
 
     public void loadCategory() {
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("id");
         dtm.addColumn("name");
         dtm.addColumn("description");
@@ -95,6 +99,10 @@ public class CategoryGUI extends JPanel {
         Helper.print(table1, "Category");
     }
 
+    private void searchInputKeyReleased(KeyEvent e) {
+        Helper.filterTable(table1, searchInput);
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
@@ -105,20 +113,23 @@ public class CategoryGUI extends JPanel {
         editBtn = new JButton();
         exportExel = new JButton();
         printBtn = new JButton();
+        searchLabel = new JLabel();
+        searchInput = new JTextField();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
-                (0, 0, 0, 0), "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax.swing.border.TitledBorder.CENTER, javax.swing.border
-                .TitledBorder.BOTTOM, new java.awt.Font("D\u0069al\u006fg", java.awt.Font.BOLD, 12), java.awt
-                .Color.red), getBorder()));
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
+                .border.EmptyBorder(0, 0, 0, 0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion", javax.swing.border.TitledBorder
+                .CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("D\u0069alog", java.
+                awt.Font.BOLD, 12), java.awt.Color.red), getBorder()))
+        ;
         addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             @Override
-            public void
-            propertyChange(java.beans.PropertyChangeEvent e) {
-                if ("\u0062or\u0064er".equals(e.getPropertyName())) throw new RuntimeException()
-                        ;
+            public void propertyChange(java.beans.PropertyChangeEvent e
+            ) {
+                if ("\u0062order".equals(e.getPropertyName())) throw new RuntimeException();
             }
-        });
+        })
+        ;
         setLayout(null);
 
         //======== scrollPane1 ========
@@ -149,13 +160,13 @@ public class CategoryGUI extends JPanel {
         addBtn.setText("Th\u00eam");
         addBtn.addActionListener(e -> addBtnActionPerformed(e));
         add(addBtn);
-        addBtn.setBounds(1015, 515, 100, 40);
+        addBtn.setBounds(1015, 555, 100, 40);
 
         //---- editBtn ----
         editBtn.setText("S\u1eeda");
         editBtn.addActionListener(e -> editBtnActionPerformed(e));
         add(editBtn);
-        editBtn.setBounds(865, 515, 100, 40);
+        editBtn.setBounds(865, 555, 100, 40);
 
         //---- exportExel ----
         exportExel.setText("Xu\u1ea5t file");
@@ -164,13 +175,28 @@ public class CategoryGUI extends JPanel {
             exportExelActionPerformed(e);
         });
         add(exportExel);
-        exportExel.setBounds(715, 515, 100, 40);
+        exportExel.setBounds(715, 555, 100, 40);
 
         //---- printBtn ----
         printBtn.setText("In");
         printBtn.addActionListener(e -> printBtnActionPerformed(e));
         add(printBtn);
-        printBtn.setBounds(555, 520, 100, 35);
+        printBtn.setBounds(555, 560, 100, 35);
+
+        //---- searchLabel ----
+        searchLabel.setText("T\u00ecm ki\u1ebfm");
+        add(searchLabel);
+        searchLabel.setBounds(765, 465, 80, 30);
+
+        //---- searchInput ----
+        searchInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchInputKeyReleased(e);
+            }
+        });
+        add(searchInput);
+        searchInput.setBounds(845, 465, 200, 30);
 
         {
             // compute preferred size
@@ -197,5 +223,7 @@ public class CategoryGUI extends JPanel {
     private JButton editBtn;
     private JButton exportExel;
     private JButton printBtn;
+    private JLabel searchLabel;
+    private JTextField searchInput;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

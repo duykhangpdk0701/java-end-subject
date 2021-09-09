@@ -26,7 +26,11 @@ public class HistoryGUI extends JPanel {
     }
 
     public void loadHistory() {
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("id");
         dtm.addColumn("date");
         dtm.addColumn("total");
@@ -66,17 +70,15 @@ public class HistoryGUI extends JPanel {
         printBtn = new JButton();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.
-                swing.border.EmptyBorder(0, 0, 0, 0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax.swing.border
-                .TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dia\u006cog"
-                , java.awt.Font.BOLD, 12), java.awt.Color.red), getBorder
-                ()));
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(0
+                , 0, 0, 0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM
+                , new java.awt.Font("Dialo\u0067", java.awt.Font.BOLD, 12), java.awt.Color.red),
+                getBorder()));
         addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             @Override
-            public void propertyChange(java
-                                               .beans.PropertyChangeEvent e) {
-                if ("bord\u0065r".equals(e.getPropertyName())) throw new RuntimeException
-                        ();
+            public void propertyChange(java.beans.PropertyChangeEvent e
+            ) {
+                if ("borde\u0072".equals(e.getPropertyName())) throw new RuntimeException();
             }
         });
         setLayout(null);
@@ -100,7 +102,7 @@ public class HistoryGUI extends JPanel {
         scrollPane1.setBounds(0, 0, 1200, scrollPane1.getPreferredSize().height);
 
         //---- detailBtn ----
-        detailBtn.setText("detail");
+        detailBtn.setText("Chi ti\u1ebft");
         detailBtn.addActionListener(e -> detailBtnActionPerformed(e));
         add(detailBtn);
         detailBtn.setBounds(1025, 520, 100, 40);

@@ -195,5 +195,25 @@ public class VegetableDAL {
         return null;
     }
 
+    public boolean reduceAmount(int id, int amount) {
+        boolean result = false;
+        if (Conn.openConnection()) {
+            try {
+                String sql = "UPDATE `vegetable` SET `amount`= ? WHERE `id` = ?";
+                PreparedStatement prstmt = Conn.getCon().prepareStatement(sql);
+                prstmt.setInt(1, amount);
+                prstmt.setInt(2, id);
+                if (prstmt.executeUpdate() >= 1) {
+                    result = true;
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                Conn.closeConnection();
+            }
+        }
+        return result;
+    }
+
 
 }

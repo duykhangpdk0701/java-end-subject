@@ -26,7 +26,11 @@ public class AdminVegetableGUI extends JPanel {
     }
 
     public void loadVegetable() {
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("id");
         dtm.addColumn("categoryId");
         dtm.addColumn("name");
@@ -80,6 +84,10 @@ public class AdminVegetableGUI extends JPanel {
         Helper.exportFileExcel(table1, this);
     }
 
+    private void searchInputKeyReleased(KeyEvent e) {
+        Helper.filterTable(table1, searchInput);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -89,21 +97,22 @@ public class AdminVegetableGUI extends JPanel {
         addBtn = new JButton();
         exportBtn = new JButton();
         printBtn = new JButton();
+        searchLabel = new JLabel();
+        searchInput = new JTextField();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing
-                .border.EmptyBorder(0, 0, 0, 0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax.swing.border.TitledBorder
-                .CENTER, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Dia\u006cog", java.
-                awt.Font.BOLD, 12), java.awt.Color.red), getBorder()))
-        ;
-        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            @Override
-            public void propertyChange(java.beans.PropertyChangeEvent e
-            ) {
-                if ("bord\u0065r".equals(e.getPropertyName())) throw new RuntimeException();
-            }
-        })
-        ;
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.
+                border.EmptyBorder(0, 0, 0, 0), "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax.swing.border.TitledBorder.CENTER
+                , javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("D\u0069al\u006fg", java.awt.Font
+                .BOLD, 12), java.awt.Color.red), getBorder()));
+        addPropertyChangeListener(
+                new java.beans.PropertyChangeListener() {
+                    @Override
+                    public void propertyChange(java.beans.PropertyChangeEvent e) {
+                        if ("\u0062or\u0064er"
+                                .equals(e.getPropertyName())) throw new RuntimeException();
+                    }
+                });
         setLayout(null);
 
         //======== scrollPane1 ========
@@ -128,25 +137,40 @@ public class AdminVegetableGUI extends JPanel {
         editBtn.setText("S\u1eeda");
         editBtn.addActionListener(e -> editBtnActionPerformed(e));
         add(editBtn);
-        editBtn.setBounds(830, 520, 100, 40);
+        editBtn.setBounds(850, 555, 100, 40);
 
         //---- addBtn ----
         addBtn.setText("Th\u00eam");
         addBtn.addActionListener(e -> addBtnActionPerformed(e));
         add(addBtn);
-        addBtn.setBounds(1015, 520, 100, 40);
+        addBtn.setBounds(1035, 555, 100, 40);
 
         //---- exportBtn ----
         exportBtn.setText("Xu\u1ea5t file Excel");
         exportBtn.addActionListener(e -> exportBtnActionPerformed(e));
         add(exportBtn);
-        exportBtn.setBounds(645, 520, 115, 40);
+        exportBtn.setBounds(665, 555, 115, 40);
 
         //---- printBtn ----
         printBtn.setText("In");
         printBtn.addActionListener(e -> printBtnActionPerformed(e));
         add(printBtn);
-        printBtn.setBounds(460, 520, 100, 40);
+        printBtn.setBounds(480, 555, 100, 40);
+
+        //---- searchLabel ----
+        searchLabel.setText("T\u00ecm Ki\u1ebfm");
+        add(searchLabel);
+        searchLabel.setBounds(855, 475, 80, 30);
+
+        //---- searchInput ----
+        searchInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchInputKeyReleased(e);
+            }
+        });
+        add(searchInput);
+        searchInput.setBounds(935, 475, 200, 30);
 
         {
             // compute preferred size
@@ -173,5 +197,7 @@ public class AdminVegetableGUI extends JPanel {
     private JButton addBtn;
     private JButton exportBtn;
     private JButton printBtn;
+    private JLabel searchLabel;
+    private JTextField searchInput;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

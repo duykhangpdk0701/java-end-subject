@@ -24,5 +24,20 @@ public class OrderBLL {
         return orderDAL.getOrdersByUserId(userId);
     }
 
+    public Vector<OrderDTO> getOrderByMonthAndYear(int month, int year) {
+        System.out.println(month);
+        System.out.println(year);
+        if (month == 0 && year == 0) {
+            return orderDAL.getAllOrder();
+        }
+        if (month == 0) {
+            return orderDAL.getOrderByYear(year);
+        }
+        if (year == 0) {
+            return orderDAL.getOrderByMonth(month);
+        }
+        return orderDAL.getOrderByMonthAndYear(month, year);
+    }
+
 
 }

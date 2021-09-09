@@ -31,9 +31,14 @@ public class CartGUI extends JPanel {
         loadCart();
     }
 
+
     public void loadCart() {
 
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("name");
         dtm.addColumn("category");
         dtm.addColumn("unit");
@@ -66,6 +71,7 @@ public class CartGUI extends JPanel {
         orderBLL.addOrder(orderDTO);
         int lastIdOrder = orderBLL.getLastOrder().getId();
         cartDTOS.forEach(n -> {
+            vegetableBLL.reduceAmount(n.getValue(), (vegetableBLL.findVegetableById(n.getValue()).getAmount()) - n.getOccur());
             OrderDetailDTO orderDetailDTO = new OrderDetailDTO();
             orderDetailDTO.setOrderId(lastIdOrder);
             orderDetailDTO.setVegetableId(n.getValue());
@@ -87,6 +93,7 @@ public class CartGUI extends JPanel {
         orderDTO.setTotal(Float.parseFloat(totalValue.getText()));
         JOptionPane.showMessageDialog(this, purchase(orderDTO, Cart.getArr()));
         Cart.setArr(new Vector<CartDTO>());
+        totalAll = 0;
         loadCart();
     }
 
@@ -100,12 +107,17 @@ public class CartGUI extends JPanel {
         totalValue = new JLabel();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.
-        border.EmptyBorder(0,0,0,0), "JF\u006frmDesi\u0067ner Ev\u0061luatio\u006e",javax.swing.border.TitledBorder.CENTER
-        ,javax.swing.border.TitledBorder.BOTTOM,new java.awt.Font("Dialo\u0067",java.awt.Font
-        .BOLD,12),java.awt.Color.red), getBorder())); addPropertyChangeListener(
-        new java.beans.PropertyChangeListener(){@Override public void propertyChange(java.beans.PropertyChangeEvent e){if("borde\u0072"
-        .equals(e.getPropertyName()))throw new RuntimeException();}});
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.
+                EmptyBorder(0, 0, 0, 0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax.swing.border.TitledBorder.CENTER, javax.swing
+                .border.TitledBorder.BOTTOM, new java.awt.Font("Dia\u006cog", java.awt.Font.BOLD, 12),
+                java.awt.Color.red), getBorder()));
+        addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            @Override
+            public void propertyChange(java.beans.PropertyChangeEvent e) {
+                if ("bord\u0065r".equals(e.getPropertyName()))
+                    throw new RuntimeException();
+            }
+        });
         setLayout(null);
 
         //======== scrollPane1 ========
@@ -113,13 +125,13 @@ public class CartGUI extends JPanel {
 
             //---- table1 ----
             table1.setModel(new DefaultTableModel(
-                new Object[][] {
-                    {null, null, null, null, null, null},
-                    {null, null, null, null, null, null},
-                },
-                new String[] {
-                    null, null, null, null, null, null
-                }
+                    new Object[][]{
+                            {null, null, null, null, null, null},
+                            {null, null, null, null, null, null},
+                    },
+                    new String[]{
+                            null, null, null, null, null, null
+                    }
             ));
             table1.addMouseListener(new MouseAdapter() {
                 @Override
@@ -133,7 +145,7 @@ public class CartGUI extends JPanel {
         scrollPane1.setBounds(0, 0, 1200, scrollPane1.getPreferredSize().height);
 
         //---- orderBtn ----
-        orderBtn.setText("order");
+        orderBtn.setText("Mua");
         orderBtn.addActionListener(e -> orderBtnActionPerformed(e));
         add(orderBtn);
         orderBtn.setBounds(945, 505, 155, 40);
@@ -151,7 +163,7 @@ public class CartGUI extends JPanel {
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
-            for(int i = 0; i < getComponentCount(); i++) {
+            for (int i = 0; i < getComponentCount(); i++) {
                 Rectangle bounds = getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -164,6 +176,7 @@ public class CartGUI extends JPanel {
         }
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
+
 
     // JFormDesigner - Variables declaration - DO NOT MODIFY  //GEN-BEGIN:variables
     // Generated using JFormDesigner Evaluation license - unknown

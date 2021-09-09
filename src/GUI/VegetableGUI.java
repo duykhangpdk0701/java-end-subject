@@ -8,6 +8,7 @@ import java.awt.event.*;
 
 import BLL.Cart;
 import BLL.CategoryBLL;
+import BLL.Helper;
 import BLL.VegetableBLL;
 import DTO.VegetableDTO;
 
@@ -29,7 +30,11 @@ public class VegetableGUI extends JPanel {
     }
 
     public void loadVegetable() {
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("id");
         dtm.addColumn("category");
         dtm.addColumn("name");
@@ -54,15 +59,24 @@ public class VegetableGUI extends JPanel {
     private void addToCardBtnActionPerformed(ActionEvent e) {
         DefaultTableModel dtm = (DefaultTableModel) table1.getModel();
         int value = Integer.parseInt(dtm.getValueAt(table1.getSelectedRow(), 0).toString());
+        int amount = Integer.parseInt(dtm.getValueAt(table1.getSelectedRow(), 4).toString());
+        if (amount == 0) {
+            JOptionPane.showMessageDialog(this, "sản phẩm đã hết hàng");
+            return;
+        }
         try {
-            Cart.addItem(value);
-            JOptionPane.showMessageDialog(this, "them va0 gio hang thanh cong");
+
+            JOptionPane.showMessageDialog(this, Cart.addItem(value));
         } catch (HeadlessException headlessException) {
-            JOptionPane.showMessageDialog(this, "them vao gio hang khong thanh cong");
+            JOptionPane.showMessageDialog(this, "thêm vào gió hàng không thành công");
         }
     }
 
     private void table1MouseClicked(MouseEvent e) {
+    }
+
+    private void searchInputKeyReleased(KeyEvent e) {
+        Helper.filterTable(table1, searchInput);
     }
 
     private void initComponents() {
@@ -71,22 +85,16 @@ public class VegetableGUI extends JPanel {
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
         addToCardBtn = new JButton();
+        searchLabel = new JLabel();
+        searchInput = new JTextField();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(
-                new javax.swing.border.EmptyBorder(0, 0, 0, 0), "JF\u006frmDes\u0069gner \u0045valua\u0074ion"
-                , javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.BOTTOM
-                , new java.awt.Font("D\u0069alog", java.awt.Font.BOLD, 12)
-                , java.awt.Color.red), getBorder()));
-        addPropertyChangeListener(
-                new java.beans.PropertyChangeListener() {
-                    @Override
-                    public void propertyChange(java.beans.PropertyChangeEvent e
-                    ) {
-                        if ("\u0062order".equals(e.getPropertyName())) throw new RuntimeException()
-                                ;
-                    }
-                });
+        setBorder (new javax. swing. border. CompoundBorder( new javax .swing .border .TitledBorder (new javax. swing. border. EmptyBorder
+        ( 0, 0, 0, 0) , "JF\u006frm\u0044es\u0069gn\u0065r \u0045va\u006cua\u0074io\u006e", javax. swing. border. TitledBorder. CENTER, javax. swing. border
+        . TitledBorder. BOTTOM, new java .awt .Font ("D\u0069al\u006fg" ,java .awt .Font .BOLD ,12 ), java. awt
+        . Color. red) , getBorder( )) );  addPropertyChangeListener (new java. beans. PropertyChangeListener( ){ @Override public void
+        propertyChange (java .beans .PropertyChangeEvent e) {if ("\u0062or\u0064er" .equals (e .getPropertyName () )) throw new RuntimeException( )
+        ; }} );
         setLayout(null);
 
         //======== scrollPane1 ========
@@ -94,13 +102,13 @@ public class VegetableGUI extends JPanel {
 
             //---- table1 ----
             table1.setModel(new DefaultTableModel(
-                    new Object[][]{
-                            {null, null, null, null, null, null, null},
-                            {null, null, null, null, null, null, null},
-                    },
-                    new String[]{
-                            null, null, null, null, null, null, null
-                    }
+                new Object[][] {
+                    {null, null, null, null, null, null, null},
+                    {null, null, null, null, null, null, null},
+                },
+                new String[] {
+                    null, null, null, null, null, null, null
+                }
             ));
             table1.addMouseListener(new MouseAdapter() {
                 @Override
@@ -114,15 +122,30 @@ public class VegetableGUI extends JPanel {
         scrollPane1.setBounds(0, 0, 1200, scrollPane1.getPreferredSize().height);
 
         //---- addToCardBtn ----
-        addToCardBtn.setText("Add to card");
+        addToCardBtn.setText("Th\u00eam v\u00e0o gi\u1ecf h\u00e0ng");
         addToCardBtn.addActionListener(e -> addToCardBtnActionPerformed(e));
         add(addToCardBtn);
-        addToCardBtn.setBounds(1010, 520, 100, 40);
+        addToCardBtn.setBounds(935, 545, 200, 40);
+
+        //---- searchLabel ----
+        searchLabel.setText("T\u00ccm ki\u1ebfm (T\u00ean):");
+        add(searchLabel);
+        searchLabel.setBounds(835, 460, 100, 30);
+
+        //---- searchInput ----
+        searchInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchInputKeyReleased(e);
+            }
+        });
+        add(searchInput);
+        searchInput.setBounds(935, 460, 200, 30);
 
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
-            for (int i = 0; i < getComponentCount(); i++) {
+            for(int i = 0; i < getComponentCount(); i++) {
                 Rectangle bounds = getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -141,5 +164,7 @@ public class VegetableGUI extends JPanel {
     private JScrollPane scrollPane1;
     private JTable table1;
     private JButton addToCardBtn;
+    private JLabel searchLabel;
+    private JTextField searchInput;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

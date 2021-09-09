@@ -4,6 +4,9 @@
 
 package GUI;
 
+import java.awt.event.*;
+
+import BLL.Helper;
 import BLL.OrderDetailBLL;
 import BLL.VegetableBLL;
 
@@ -26,7 +29,11 @@ public class OrderDetailGUI extends JFrame {
 
     public void loadOrderDetailGUI(int orderId) {
         int count = 0;
-        DefaultTableModel dtm = new DefaultTableModel();
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("id");
         dtm.addColumn("name");
         dtm.addColumn("amount");
@@ -46,12 +53,22 @@ public class OrderDetailGUI extends JFrame {
 
     }
 
+    private void exportBtnActionPerformed(ActionEvent e) {
+        Helper.exportFileExcel(table1, this);
+    }
+
+    private void printBtnActionPerformed(ActionEvent e) {
+        Helper.print(table1, "History");
+    }
+
 
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
         scrollPane1 = new JScrollPane();
         table1 = new JTable();
+        exportBtn = new JButton();
+        printBtn = new JButton();
 
         //======== this ========
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -63,23 +80,35 @@ public class OrderDetailGUI extends JFrame {
 
             //---- table1 ----
             table1.setModel(new DefaultTableModel(
-                new Object[][] {
-                    {null, null, null, null},
-                    {null, null, null, null},
-                },
-                new String[] {
-                    null, null, null, null
-                }
+                    new Object[][]{
+                            {null, null, null, null},
+                            {null, null, null, null},
+                    },
+                    new String[]{
+                            null, null, null, null
+                    }
             ));
             scrollPane1.setViewportView(table1);
         }
         contentPane.add(scrollPane1);
-        scrollPane1.setBounds(0, 0, 900, 470);
+        scrollPane1.setBounds(0, 0, 900, 400);
+
+        //---- exportBtn ----
+        exportBtn.setText("Xu\u1ea5t file Excel");
+        exportBtn.addActionListener(e -> exportBtnActionPerformed(e));
+        contentPane.add(exportBtn);
+        exportBtn.setBounds(710, 415, 150, 40);
+
+        //---- printBtn ----
+        printBtn.setText("In");
+        printBtn.addActionListener(e -> printBtnActionPerformed(e));
+        contentPane.add(printBtn);
+        printBtn.setBounds(470, 415, 150, 40);
 
         {
             // compute preferred size
             Dimension preferredSize = new Dimension();
-            for(int i = 0; i < contentPane.getComponentCount(); i++) {
+            for (int i = 0; i < contentPane.getComponentCount(); i++) {
                 Rectangle bounds = contentPane.getComponent(i).getBounds();
                 preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
                 preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
@@ -90,7 +119,7 @@ public class OrderDetailGUI extends JFrame {
             contentPane.setMinimumSize(preferredSize);
             contentPane.setPreferredSize(preferredSize);
         }
-        pack();
+        setSize(900, 500);
         setLocationRelativeTo(getOwner());
         // JFormDesigner - End of component initialization  //GEN-END:initComponents
     }
@@ -99,5 +128,7 @@ public class OrderDetailGUI extends JFrame {
     // Generated using JFormDesigner Evaluation license - unknown
     private JScrollPane scrollPane1;
     private JTable table1;
+    private JButton exportBtn;
+    private JButton printBtn;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }

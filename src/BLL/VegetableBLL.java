@@ -40,4 +40,8 @@ public class VegetableBLL {
     public VegetableDTO findVegetableById(int id) {
         return vegetableDAL.findVegetableID(id);
     }
+
+    public boolean reduceAmount(int id, int amount) {
+        return vegetableDAL.reduceAmount(id, amount);
+    }
 }

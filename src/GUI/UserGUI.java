@@ -20,7 +20,6 @@ import javax.swing.table.*;
  */
 public class UserGUI extends JPanel {
     UserBLL userBLL = new UserBLL();
-    DefaultTableModel dtm = new DefaultTableModel();
 
     public UserGUI() {
         initComponents();
@@ -28,6 +27,11 @@ public class UserGUI extends JPanel {
     }
 
     public void loadUser() {
+        DefaultTableModel dtm = new DefaultTableModel() {
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         dtm.addColumn("id");
         dtm.addColumn("fullname");
         dtm.addColumn("username");
@@ -58,6 +62,35 @@ public class UserGUI extends JPanel {
         Helper.print(table1, "user");
     }
 
+    private void adminBtnActionPerformed(ActionEvent e) {
+        DefaultTableModel dtms = (DefaultTableModel) table1.getModel();
+        int id = Integer.parseInt(dtms.getValueAt(table1.getSelectedRow(), 0).toString());
+        int admin = Integer.parseInt(dtms.getValueAt(table1.getSelectedRow(), 5).toString());
+        try {
+            if (id == 1) {
+                JOptionPane.showMessageDialog(this, "Không thể thay đổi vì đây là tài khoản admin quan trọng");
+                return;
+            }
+            if (admin == 0) {
+                JOptionPane.showMessageDialog(this, userBLL.becomeAdmin(id));
+                loadUser();
+                return;
+            }
+            if (admin == 1) {
+                JOptionPane.showMessageDialog(this, userBLL.becomeUser(id));
+                loadUser();
+                return;
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Thay đổi không thành công");
+        }
+        loadUser();
+    }
+
+    private void searchInputKeyReleased(KeyEvent e) {
+        Helper.filterTable(table1, searchInput);
+    }
+
     private void initComponents() {
         // JFormDesigner - Component initialization - DO NOT MODIFY  //GEN-BEGIN:initComponents
         // Generated using JFormDesigner Evaluation license - unknown
@@ -66,17 +99,20 @@ public class UserGUI extends JPanel {
         adminBtn = new JButton();
         printBtn = new JButton();
         exportBtn = new JButton();
+        searchLabel = new JLabel();
+        searchInput = new JTextField();
 
         //======== this ========
-        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder(
-                0, 0, 0, 0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder
-                .BOTTOM, new java.awt.Font("Dia\u006cog", java.awt.Font.BOLD, 12), java.awt.Color.
-                red), getBorder()));
+        setBorder(new javax.swing.border.CompoundBorder(new javax.swing.border.TitledBorder(new javax.swing.border.EmptyBorder
+                (0, 0, 0, 0), "JFor\u006dDesi\u0067ner \u0045valu\u0061tion", javax.swing.border.TitledBorder.CENTER, javax.swing.border
+                .TitledBorder.BOTTOM, new java.awt.Font("Dia\u006cog", java.awt.Font.BOLD, 12), java.awt
+                .Color.red), getBorder()));
         addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             @Override
-            public void propertyChange(java.
-                                               beans.PropertyChangeEvent e) {
-                if ("bord\u0065r".equals(e.getPropertyName())) throw new RuntimeException();
+            public void
+            propertyChange(java.beans.PropertyChangeEvent e) {
+                if ("bord\u0065r".equals(e.getPropertyName())) throw new RuntimeException()
+                        ;
             }
         });
         setLayout(null);
@@ -100,21 +136,37 @@ public class UserGUI extends JPanel {
         scrollPane1.setBounds(0, 0, 1200, scrollPane1.getPreferredSize().height);
 
         //---- adminBtn ----
-        adminBtn.setText("Admin");
+        adminBtn.setText("Thay \u0111\u1ed5i quy\u1ec1n");
+        adminBtn.addActionListener(e -> adminBtnActionPerformed(e));
         add(adminBtn);
-        adminBtn.setBounds(990, 515, 100, 40);
+        adminBtn.setBounds(1030, 550, 125, 40);
 
         //---- printBtn ----
         printBtn.setText("In");
         printBtn.addActionListener(e -> printBtnActionPerformed(e));
         add(printBtn);
-        printBtn.setBounds(650, 515, 100, 40);
+        printBtn.setBounds(690, 550, 100, 40);
 
         //---- exportBtn ----
         exportBtn.setText("Xu\u1ea5t file excel");
         exportBtn.addActionListener(e -> exportBtnActionPerformed(e));
         add(exportBtn);
-        exportBtn.setBounds(815, 515, 120, 40);
+        exportBtn.setBounds(855, 550, 120, 40);
+
+        //---- searchLabel ----
+        searchLabel.setText("t\u00ecm ki\u1ebfm:");
+        add(searchLabel);
+        searchLabel.setBounds(840, 475, 90, 30);
+
+        //---- searchInput ----
+        searchInput.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                searchInputKeyReleased(e);
+            }
+        });
+        add(searchInput);
+        searchInput.setBounds(930, 475, 200, 30);
 
         {
             // compute preferred size
@@ -140,5 +192,7 @@ public class UserGUI extends JPanel {
     private JButton adminBtn;
     private JButton printBtn;
     private JButton exportBtn;
+    private JLabel searchLabel;
+    private JTextField searchInput;
     // JFormDesigner - End of variables declaration  //GEN-END:variables
 }
