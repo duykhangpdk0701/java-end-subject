@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 public class OrderDetailGUI extends JFrame {
     VegetableBLL vegetableBLL = new VegetableBLL();
     OrderDetailBLL orderDetailBLL = new OrderDetailBLL();
+    int count = 1;
 
     public OrderDetailGUI(int orderId) {
         initComponents();
@@ -28,13 +29,13 @@ public class OrderDetailGUI extends JFrame {
 
 
     public void loadOrderDetailGUI(int orderId) {
-        int count = 0;
+
         DefaultTableModel dtm = new DefaultTableModel() {
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
-        dtm.addColumn("id");
+        dtm.addColumn("Số thứ tự");
         dtm.addColumn("name");
         dtm.addColumn("amount");
         dtm.addColumn("price");
@@ -42,7 +43,7 @@ public class OrderDetailGUI extends JFrame {
         table1.setModel(dtm);
 
         orderDetailBLL.getOrderDetailByOrderId(orderId).forEach(item -> {
-            int id = count + 1;
+            int id = count++;
             String name = vegetableBLL.findVegetableById(item.getVegetableId()).getName();
             int amount = item.getQuantity();
             float price = item.getPrice();

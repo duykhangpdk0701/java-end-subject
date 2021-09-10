@@ -1,0 +1,10 @@
+admin
+username: admin
+password: admin
+
+user
+username: duykhangpdk0701
+password: pdk073101
+
+username: duykhangpdk
+passowrd: admin
